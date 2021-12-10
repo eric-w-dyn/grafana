@@ -12,20 +12,20 @@ jobs:
 
     - uses: c-hive/gha-yarn-cache@v2
 
-    # - name: Yarn install
-    #   run: yarn install --immutable
+    - name: Yarn install
+      run: yarn install --immutable
 
-    # - name: Build packages
-    #   run: yarn packages:build 
+    - name: Build packages
+      run: yarn packages:build 
 
-    # - name: Detect breaking changes
-    #   run: ./scripts/check-breaking-changes.sh 
-    #   env:
-    #     FORCE_COLOR: 3
+    - name: Detect breaking changes
+      run: ./scripts/check-breaking-changes.sh 
+      env:
+        FORCE_COLOR: 3
 
-    # - name: Find current pull request ID
-    #   uses: jwalton/gh-find-current-pr@v1
-    #   id: finder
+    - name: Find current pull request ID
+      uses: jwalton/gh-find-current-pr@v1
+      id: finder
     
     - name: Get job link
       id: get-job-link
