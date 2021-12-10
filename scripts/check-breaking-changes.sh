@@ -38,9 +38,7 @@ while IFS= read -r line; do
     if [ $STATUS -gt 0 ]
     then
         EXIT_CODE=1
-        MESSAGE="${MESSAGE}${RED} ✘ ${PACKAGE_NAME}: possible breaking changes${ENDCOLOR}<br />"    
-    else 
-        MESSAGE="${MESSAGE}${GREEN} ✔ ${PACKAGE_NAME}: no breaking changes<br />${ENDCOLOR}"    
+        MESSAGE="${MESSAGE}**`${PACKAGE_NAME}`** has possible breaking changes ([more info]())<br />"    
     fi    
 
 done <<< "$PACKAGES"

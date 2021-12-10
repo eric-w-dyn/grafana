@@ -30,11 +30,12 @@ jobs:
       with:
         number: ${{ steps.finder.outputs.pr }}
         message: |
-          **Possible breaking changes**
+          ⚠️ &nbsp;&nbsp;**Possible breaking changes**
 
           ${{ env.BREAKING_CHANGES_MESSAGE }}
 
-          [More info](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [Check console output](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [Check console output](https://github.com/${{ github.repository }}/runs/${{ github.job }})
 
     - name: Exit
       run: exit ${{ env.BREAKING_CHANGES_IS_BREAKING }}
