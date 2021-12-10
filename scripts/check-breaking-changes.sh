@@ -3,7 +3,7 @@
 PACKAGES=$(lerna list -p -l)
 PACKAGE_NAMES=()
 EXIT_CODE=0
-MESSAGE=""
+GITHUB_MESSAGE=""
 RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 ENDCOLOR=$(tput sgr0)
@@ -38,14 +38,14 @@ while IFS= read -r line; do
     if [ $STATUS -gt 0 ]
     then
         EXIT_CODE=1
-        MESSAGE="${MESSAGE}**\`${PACKAGE_NAME}\`** has possible breaking changes ([more info]())<br />"    
+        GITHUB_MESSAGE="${GITHUB_MESSAGE}**\`${PACKAGE_NAME}\`** has possible breaking changes ([more info](${GITHUB_JOB_LINK}#step:6:1))<br />"    
     fi    
 
 done <<< "$PACKAGES"
 
 # "Export" the message to an environment variable that can be used across Github Actions steps
 echo "BREAKING_CHANGES_IS_BREAKING=$EXIT_CODE" >> $GITHUB_ENV
-echo "BREAKING_CHANGES_MESSAGE=$MESSAGE" >> $GITHUB_ENV
+echo "BREAKING_CHANGES_MESSAGE=$GITHUB_MESSAGE" >> $GITHUB_ENV
 
 # We will exit the workflow accordingly at another step
 exit 0

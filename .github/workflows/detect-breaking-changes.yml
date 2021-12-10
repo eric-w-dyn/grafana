@@ -18,15 +18,7 @@ jobs:
     - name: Build packages
       run: yarn packages:build 
 
-    - name: Detect breaking changes
-      run: ./scripts/check-breaking-changes.sh 
-      env:
-        FORCE_COLOR: 3
-
-    - name: Find current pull request ID
-      uses: jwalton/gh-find-current-pr@v1
-      id: finder
-    
+    # We need this as we can only access the "Run ID" through the context and we need the "Job ID".
     - name: Get job link
       id: get-job-link
       uses: actions/github-script@v5
@@ -40,6 +32,15 @@ jobs:
 
           return `https://github.com/grafana/grafana/runs/${result.data.jobs[0].id}?check_suite_focus=true`;
 
+    - name: Detect breaking changes
+      run: ./scripts/check-breaking-changes.sh 
+      env:
+        FORCE_COLOR: 3
+        GITHUB_JOB_LINK: ${{steps.get-job-link.outputs.result}}
+
+    - name: Find current pull request ID
+      uses: jwalton/gh-find-current-pr@v1
+      id: finder
 
     - name: Comment on PR
       if: ${{ env.BREAKING_CHANGES_IS_BREAKING == '1' || env.BREAKING_CHANGES_IS_BREAKING == 1 }}
@@ -51,7 +52,6 @@ jobs:
 
           ${{ env.BREAKING_CHANGES_MESSAGE }}
 
-          [Check console output](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
           [Check console output](${{steps.get-job-link.outputs.result}})
 
     - name: Exit
