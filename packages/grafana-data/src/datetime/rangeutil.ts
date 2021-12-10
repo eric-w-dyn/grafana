@@ -342,9 +342,12 @@ export function intervalToMs(str: string): number {
 
 export function roundInterval(interval: number) {
   switch (true) {
+    // 0.005s
+    case interval < 5:
+    return 1; // 0.001s
     // 0.015s
     case interval < 15:
-      return 10; // 0.01s
+      return 10; // 0.001s
     // 0.035s
     case interval < 35:
       return 20; // 0.02s
