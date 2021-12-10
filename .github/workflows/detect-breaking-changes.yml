@@ -1,4 +1,4 @@
-name: Detect breaking changes
+name: Levitate
 
 on: push
 
@@ -33,7 +33,7 @@ jobs:
       with:
         result-encoding: string
         script: |
-          const { owner, repo } = context.owner;
+          const { owner, repo } = context.repo;
           const url = "https://api.github.com/repos/${owner}/${repo}/actions/runs/${context.runId}/jobs"
           const result = await github.request(url)
           console.log(data)
